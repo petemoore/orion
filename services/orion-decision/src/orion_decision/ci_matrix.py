@@ -21,8 +21,8 @@ PLATFORMS = ["linux", "windows", "macos"]
 VERSIONS = {
     ("node", "linux"): ["14", "16"],
     ("python", "linux"): ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"],
-    ("python", "windows"): ["3.8", "3.9", "3.10"],
-    ("python", "macos"): ["3.8", "3.9", "3.10"],
+    ("python", "windows"): ["3.8", "3.9", "3.10", "3.11"],
+    ("python", "macos"): ["3.8", "3.9", "3.10", "3.11"],
 }
 IMAGES = {
     ("node", "linux", "14"): "ci-node-14",
@@ -36,9 +36,11 @@ IMAGES = {
     ("python", "windows", "3.8"): "ci-py-38-win",
     ("python", "windows", "3.9"): "ci-py-39-win",
     ("python", "windows", "3.10"): "ci-py-310-win",
+    ("python", "windows", "3.11"): "ci-py-311-win",
     ("python", "macos", "3.8"): "ci-py-38-osx",
     ("python", "macos", "3.9"): "ci-py-39-osx",
     ("python", "macos", "3.10"): "ci-py-310-osx",
+    ("python", "macos", "3.11"): "ci-py-311-osx",
 }
 SCHEMA_CACHE: Dict[str, Any] = {}
 LOG = getLogger(__name__)

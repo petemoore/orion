@@ -23,10 +23,13 @@ done
 # Make all Mach-O binaries load dylibs relative to themselves
 find . -type f -exec file -h \{\} \+ | grep "Mach-O" | grep -v '(' | cut -d: -f1 | while read -r inp
 do
-  # preserve file permissions to restore later
-  perm="$(stat -f %p "$inp")"
   # some files are installed read-only. ensure they are writable
-  chmod +w "$inp"
+  needs_write=0
+  [ -w "$inp" ] || needs_write=$?
+  if [ $needs_write -eq 1 ]; then
+    chmod +w "$inp"
+  fi
+
   if ! file "$inp" | grep -q executable; then
     # change lib id to @rpath
     install_name_tool -id "@rpath/$(basename "$inp")" "$inp"
@@ -37,5 +40,7 @@ do
     install_name_tool -change "$lib" "@loader_path/$(relative_to "$lib" "$PWD/$(dirname "$inp")")" "$inp"
   done
   # restore file permissions
-  chmod "$perm" "$inp"
+  if [ $needs_write -eq 1 ]; then
+    chmod -w "$inp"
+  fi
 done
